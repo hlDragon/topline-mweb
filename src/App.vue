@@ -1,9 +1,10 @@
 <template>
-  <div id="app">
-    <div id="nav">
-    </div>
+  <div>
+    <router-view></router-view>
   </div>
 </template>
+
+<script></script>
 
 <style lang="less">
 </style>
