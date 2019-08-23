@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '@/store'
 
 const request = axios.create({
   baseURL: 'http://ttapi.research.itcast.cn'
@@ -7,6 +8,10 @@ const request = axios.create({
 // Add a request interceptor
 request.interceptors.request.use(function (config) {
   // Do something before request is sent
+  const { user } = store.state
+  if (user) {
+    config.headers.Authorization = `Bearer ${user.token}`
+  }
   return config
 }, function (error) {
   // Do something with request error
@@ -26,4 +31,16 @@ request.interceptors.response.use(function (response) {
   return Promise.reject(error)
 })
 
-export default request
+export const createAPI = (url, method, data) => {
+  let config = {}
+  if (method === 'get') {
+    config.params = data
+  } else {
+    config.data = data
+  }
+  return request({
+    url,
+    method,
+    ...config
+  })
+}

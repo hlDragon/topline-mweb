@@ -5,23 +5,13 @@ import store from './store'
 import Vant from 'vant'
 import 'vant/lib/index.css'
 import '@/style/index.less'
-import VeeValidate from 'vee-validate'
+import VeeValidate, { Validator } from 'vee-validate'
+import zhCN from 'vee-validate/dist/locale/zh_CN' // 加载验证插件的语言包
 
-import zhCN from 'vee-validate/dist/locale/zh_CN'
-import VueI18n from 'vue-i18n'
-Vue.use(VueI18n)
-const i18n = new VueI18n({
-  locale: 'zhCN'
-})
-Vue.use(VeeValidate, {
-  i18n,
-  i18nRootKey: 'validation',
-  dictionary: {
-    zhCN
-  }
-})
+// 注意：这句代码一定要在 Vue.use(VeeValidate) 之后
 
-Vue.use(VeeValidate)
+Vue.use(VeeValidate, { events: 'blur' })
+Validator.localize('zh_CN', zhCN)
 
 Vue.use(Vant)
 
